@@ -1,7 +1,8 @@
+// Hacer crud persist 
 import { create } from 'zustand'
-import { v4 as uuidv4 } from 'uuid';
-import { Task } from './types';
-
+import { persist, createJSONStorage } from 'zustand/middleware'
+import { Task } from './types'
+import { v4 as uuidv4 } from 'uuid'
 
 interface TaskState {
   tasks: Task[];
@@ -11,8 +12,11 @@ interface TaskState {
   toggleTask: (id: string) => void;
 }
 
-export const useStore = create<TaskState>((set) => ({
-  tasks: [],
+export const useStore = create<TaskState>()(
+  persist(
+    (set) => ({
+      tasks: [],
+
   addTask: (body: string) => {
     set((state) => ({
       tasks: [
@@ -48,4 +52,13 @@ export const useStore = create<TaskState>((set) => ({
       ),
     }));
   },
-}));
+    }),
+    {
+      name: 'food-storage', // name of item in the storage (must be unique)
+      storage: createJSONStorage(() => sessionStorage), // (optional) by default the 'localStorage' is used
+      partialize: (state) => ({ tasks: state.tasks }),
+    }
+  )
+)
+
+
