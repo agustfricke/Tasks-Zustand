@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid';
 
 import { Task } from './model/Task';
@@ -7,6 +7,7 @@ interface TaskState {
   tasks: Task[];
   addTask: (body: string) => void;
   removeTask: (id: string) => void;
+  editTask: (id: string, body: string) => void;
   toggleTask: (id: string) => void;
 }
 
@@ -28,6 +29,15 @@ export const useStore = create<TaskState>((set) => ({
     set((state) => ({
       tasks: state.tasks.filter((task) => task.id !== id),
     }));
+  },
+  editTask: (id, body: string) => {
+    set((state) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === id
+          ? ({ ...task, body: body } as Task)
+          : task
+      ),
+    }))
   },
   toggleTask: (id) => {
     set((state) => ({
