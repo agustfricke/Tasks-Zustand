@@ -1,4 +1,3 @@
-// Hacer crud persist 
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { Task } from './types'
@@ -54,8 +53,8 @@ export const useStore = create<TaskState>()(
   },
     }),
     {
-      name: 'food-storage', // name of item in the storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // (optional) by default the 'localStorage' is used
+      name: 'tasks', 
+      storage: createJSONStorage(() => sessionStorage), 
       partialize: (state) => ({ tasks: state.tasks }),
     }
   )
