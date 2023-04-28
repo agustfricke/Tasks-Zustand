@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid';
+import { Task } from './types';
 
-import { Task } from './model/Task';
 
 interface TaskState {
   tasks: Task[];

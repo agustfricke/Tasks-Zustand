@@ -1,6 +1,6 @@
 import { useStore } from "./store"
 import { useState } from "react"
-import { Task } from "./model/Task";
+import { Task } from "./types";
 
 function App() {
 
@@ -9,7 +9,6 @@ function App() {
 
   return (
     <>
-
       <input type="text" value={todoText} onChange={(e) => setTodoText(e.target.value)} />
       <button onClick={() => {
         if (todoText.length) {
@@ -17,18 +16,17 @@ function App() {
           setTodoText("");
         }
       }}>Add Task</button>
-
-        <div>
+      <div>
         {tasks.map((task) => (
           <li key={task.id}>
             <Tasks task={task} />
           </li>
         ))}
-        </div>
-
-        </>
+      </div>
+    </>
   )
 }
+
 export default App
 
 interface TasksProps {
@@ -44,33 +42,30 @@ const Tasks = ({ task }: TasksProps) => {
 
   if(edit) {
     content = (
-                <>
-              <input type="text" value={task.body} onChange={(e) => editTask( task.id, e.target.value )} />
+      <>
+        <input type="text" value={task.body} onChange={(e) => editTask( task.id, e.target.value )} />
 
-              <button onClick={() => setEdited(false)}>
-                Save
-                </button>
-                </>
+        <button onClick={() => setEdited(false)}>
+          Save
+        </button>
+      </>
     )
   } else {
     content = (
       <>
-      <span>
-              {task.body}
-          </span>  
-              <button onClick={() => setEdited(true)}>Edit</button>
-              </>
-      
+        <span>
+          {task.body}
+        </span>  
+        <button onClick={() => setEdited(true)}>Edit</button>
+      </>
     )
   }
 
   return (
     <>
-          <input type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
+      <input type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
       {content}
-              <button onClick={() => removeTask(task.id)}>Remove</button>
-
-
+      <button onClick={() => removeTask(task.id)}>Remove</button>
     </>
   )
 }
