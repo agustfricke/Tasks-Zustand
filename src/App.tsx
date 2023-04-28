@@ -1,5 +1,6 @@
 import { useStore } from "./store"
 import { useState } from "react"
+import { Task } from "./model/Task";
 
 function App() {
 
@@ -31,11 +32,7 @@ function App() {
 export default App
 
 interface TasksProps {
-  task: {
-    id: string;
-    body: string;
-    completed: boolean;
-  }  
+  task: Task;
 }
 
 const Tasks = ({ task }: TasksProps) => {
